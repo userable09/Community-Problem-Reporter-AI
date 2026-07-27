@@ -1,0 +1,6 @@
+{
+  "name": "Community Problem Reporter AI",
+  "description": "Empowering citizens to report, track, and resolve community issues with AI analysis, smart priority detection, interactive maps, and complaint letter generation.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
