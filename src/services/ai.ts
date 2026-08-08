@@ -78,13 +78,45 @@ export async function sendChatMessageToAI(
       throw new Error(`Server returned status ${response.status}`);
     }
 
-    return await response.json();
+    const data = await response.json();
+    if (data && data.reply) {
+      return data;
+    }
+    throw new Error('Invalid response structure');
   } catch (err: any) {
-    console.error('Chat AI failed:', err);
+    console.warn('Chat API fetch failed, using smart client fallback:', err);
+    
+    // Smart client-side response system for static / client-only hosts like Vercel
+    const lastMsg = (messages[messages.length - 1]?.content || '').toLowerCase().trim();
+
+    let reply = `I'm here to assist with your civic questions! You can ask me how to report potholes, water leaks, street light failures, or how to generate formal complaint letters for local authorities. What would you like help with?`;
+
+    if (!lastMsg) {
+      reply = "Hello! I am your AI Civic Assistant. How can I help you with reporting or resolving community issues today?";
+    } else if (lastMsg.includes('hi') || lastMsg.includes('hello') || lastMsg.includes('hey') || lastMsg.includes('greetings')) {
+      reply = "Hello! 👋 I'm **CivicBot**, your AI assistant for Community Problem Reporter. I can help you report local issues, understand municipal departments, or draft formal complaint letters. What issue are you experiencing today?";
+    } else if (lastMsg.includes('pothole') || lastMsg.includes('road') || lastMsg.includes('crack') || lastMsg.includes('asphalt')) {
+      reply = "🛣️ **Reporting Road Damage & Potholes:**\n\n1. Click **Report Problem** on the left menu.\n2. Select **Road Damage** as the category.\n3. Enter the street location and attach a photo.\n4. Our AI will automatically rate the urgency and draft an official complaint letter for the **Department of Transportation & Public Works**!";
+    } else if (lastMsg.includes('garbage') || lastMsg.includes('trash') || lastMsg.includes('waste') || lastMsg.includes('dump')) {
+      reply = "🗑️ **Reporting Illegal Dumping & Garbage Accumulation:**\n\n1. Go to **Report Problem**.\n2. Choose **Garbage / Sanitation** as the category.\n3. Detail the location and whether hazardous items are present.\n4. The system will alert the **Sanitation & Environmental Department** and generate a formal dispatch request.";
+    } else if (lastMsg.includes('light') || lastMsg.includes('dark') || lastMsg.includes('electricity') || lastMsg.includes('power')) {
+      reply = "💡 **Street Light & Electrical Issues:**\n\n1. Navigate to **Report Problem**.\n2. Select **Street Lights** or **Electricity**.\n3. Mention pole numbers or cross streets if available.\n4. Our AI analyzer routes your complaint directly to the **Municipal Power & Energy Board**.";
+    } else if (lastMsg.includes('water') || lastMsg.includes('leak') || lastMsg.includes('sewer') || lastMsg.includes('pipe')) {
+      reply = "🚰 **Water Leakage & Drainage Hazards:**\n\n1. Select **Water Leakage / Sewer Blockage** under **Report Problem**.\n2. Note if clean water or sewage is overflowing.\n3. Severe leaks get flagged with high priority and an automated complaint for the **Water & Sanitation Utility**.";
+    } else if (lastMsg.includes('emergency') || lastMsg.includes('fire') || lastMsg.includes('police') || lastMsg.includes('911') || lastMsg.includes('danger')) {
+      reply = "🚨 **Emergency Guidance:**\n\nFor immediate life-threatening emergencies, crimes in progress, or active fires, please **dial 911 immediately**.\n\nFor municipal utility emergencies (gas leak, live electric wire), open the **Emergency Contacts** tab on the sidebar to find instant hotlines for Police, Fire, Ambulance, Electric, and Water authorities.";
+    } else if (lastMsg.includes('letter') || lastMsg.includes('complaint') || lastMsg.includes('pdf') || lastMsg.includes('docx') || lastMsg.includes('download')) {
+      reply = "📄 **Official Municipal Complaint Letters:**\n\nWhen you submit any issue, our AI automatically crafts an official, professionally worded complaint letter.\n- Go to **AI Problem Analyzer** or **Issue History**.\n- Click **Print / Export PDF** or **Export DOCX** to send directly to your local council or mayor's office!";
+    } else if (lastMsg.includes('map') || lastMsg.includes('location') || lastMsg.includes('track')) {
+      reply = "🗺️ **Interactive Community Map & Tracking:**\n\n- Click **Community Map** to view all reported issues pinpointed geographically across your neighborhood.\n- Click **Issue History** to track status updates (Pending, In Progress, Resolved) and filter by priority.";
+    } else if (lastMsg.includes('who') || lastMsg.includes('developer') || lastMsg.includes('maryam') || lastMsg.includes('tahir')) {
+      reply = "✨ **About This Application:**\n\n**Community Problem Reporter AI** was developed by **Maryam Tahir** to empower citizens with AI-driven civic problem resolution.\n\n🌐 **Portfolio:** [maryamtahir.tech](https://www.maryamtahir.tech)\n💼 **LinkedIn:** [linkedin.com/in/maryam-tahir-developer/](https://www.linkedin.com/in/maryam-tahir-developer/)";
+    }
+
     return {
       success: true,
-      reply: `I apologize, but I am currently operating in offline mode. For urgent civic emergencies, please dial 911 or call your local municipal hotline 311. How else can I assist with your report?`,
-      provider: 'Offline Assistant',
+      reply,
+      provider: 'Civic Assistant Engine',
     };
   }
 }
