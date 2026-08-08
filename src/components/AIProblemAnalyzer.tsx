@@ -109,7 +109,7 @@ export const AIProblemAnalyzer: React.FC<AIProblemAnalyzerProps> = ({
           <div className="flex items-center gap-2">
             <span className="font-extrabold text-xl text-white">AI Problem Analyzer</span>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-emerald-300" /> Groq Llama-3.3
+              <Sparkles className="w-3 h-3 text-emerald-300" /> Smart AI Engine
             </span>
           </div>
           <p className="text-xs text-slate-300">
@@ -180,7 +180,7 @@ export const AIProblemAnalyzer: React.FC<AIProblemAnalyzerProps> = ({
             <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-12 text-center space-y-4 shadow-xl">
               <Loader2 className="w-10 h-10 text-emerald-400 animate-spin mx-auto" />
               <div className="space-y-1">
-                <h4 className="font-bold text-base text-white">Analyzing Issue with Groq AI...</h4>
+                <h4 className="font-bold text-base text-white">Analyzing Issue with AI Engine...</h4>
                 <p className="text-xs text-slate-300">
                   Evaluating category, urgency score, grammar correction, and generating municipal complaint letter.
                 </p>

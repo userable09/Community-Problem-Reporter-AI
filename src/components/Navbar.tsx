@@ -35,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 CivicPulse <span className="text-emerald-400">AI</span>
               </span>
               <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
-                <Sparkles className="w-2.5 h-2.5" /> Groq Powered
+                <Sparkles className="w-2.5 h-2.5" /> AI Powered
               </span>
             </div>
             <p className="text-xs text-slate-300 hidden sm:block">

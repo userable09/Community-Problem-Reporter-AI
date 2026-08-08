@@ -10,6 +10,7 @@ import { CommunityMap } from './components/CommunityMap';
 import { EmergencyContacts } from './components/EmergencyContacts';
 import { AIChatbot } from './components/AIChatbot';
 import { SettingsPage } from './components/SettingsPage';
+import { Footer } from './components/Footer';
 import { StorageService } from './services/storage';
 import { Issue, IssueStatus, AppSettings, AIAnalysisResult } from './types';
 import { Menu, X } from 'lucide-react';
@@ -106,93 +107,97 @@ export default function App() {
       {isLandingPage ? (
         <LandingPage onOpenDashboard={(tab) => handleOpenDashboardTab(tab)} />
       ) : (
-        <div className="flex min-h-[calc(100vh-4rem)]">
-          {/* Mobile Sidebar Toggle Header */}
-          <div className="md:hidden fixed bottom-4 right-4 z-40">
-            <button
-              onClick={() => setIsOpenMobileSidebar(!isOpenMobileSidebar)}
-              className="p-3.5 rounded-2xl bg-blue-600 text-white shadow-2xl flex items-center justify-center gap-2 font-bold text-xs"
-            >
-              {isOpenMobileSidebar ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              <span>Menu</span>
-            </button>
+        <div className="flex flex-col min-h-[calc(100vh-4rem)]">
+          <div className="flex flex-1">
+            {/* Mobile Sidebar Toggle Header */}
+            <div className="md:hidden fixed bottom-4 right-4 z-40">
+              <button
+                onClick={() => setIsOpenMobileSidebar(!isOpenMobileSidebar)}
+                className="p-3.5 rounded-2xl bg-blue-600 text-white shadow-2xl flex items-center justify-center gap-2 font-bold text-xs"
+              >
+                {isOpenMobileSidebar ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                <span>Menu</span>
+              </button>
+            </div>
+
+            {/* Desktop & Mobile Sidebar */}
+            <Sidebar
+              currentTab={currentTab}
+              onTabChange={(tab) => {
+                setCurrentTab(tab);
+                setSelectedIssueId(null);
+              }}
+              isOpenMobile={isOpenMobileSidebar}
+              onCloseMobile={() => setIsOpenMobileSidebar(false)}
+            />
+
+            {/* Dashboard View Container */}
+            <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto overflow-x-hidden w-full">
+              {currentTab === 'dashboard' && (
+                <DashboardOverview
+                  issues={issues}
+                  onNavigate={(tab, issueId) => handleOpenDashboardTab(tab, issueId)}
+                  onUpdateStatus={handleUpdateStatus}
+                />
+              )}
+
+              {currentTab === 'report' && (
+                <ReportProblemForm
+                  onSaveIssue={handleSaveIssue}
+                  onNavigateToAnalyzer={(id) => handleOpenDashboardTab('analyzer', id)}
+                  userGroqKey={settings.groqApiKey}
+                />
+              )}
+
+              {currentTab === 'analyzer' && (
+                <AIProblemAnalyzer
+                  issues={issues}
+                  selectedIssueId={selectedIssueId}
+                  userGroqKey={settings.groqApiKey}
+                  onUpdateIssueAnalysis={handleUpdateIssueAnalysis}
+                />
+              )}
+
+              {currentTab === 'history' && (
+                <IssueHistory
+                  issues={issues}
+                  onUpdateStatus={handleUpdateStatus}
+                  onDeleteIssue={handleDeleteIssue}
+                  onSaveIssue={handleSaveIssue}
+                  onNavigateToAnalyzer={(id) => handleOpenDashboardTab('analyzer', id)}
+                />
+              )}
+
+              {currentTab === 'map' && (
+                <CommunityMap
+                  issues={issues}
+                  onNavigateToAnalyzer={(id) => handleOpenDashboardTab('analyzer', id)}
+                  onNavigateToReport={() => handleOpenDashboardTab('report')}
+                />
+              )}
+
+              {currentTab === 'emergency' && <EmergencyContacts />}
+
+              {currentTab === 'chatbot' && (
+                <AIChatbot
+                  userGroqKey={settings.groqApiKey}
+                  onNavigateToReport={() => handleOpenDashboardTab('report')}
+                />
+              )}
+
+              {currentTab === 'settings' && (
+                <SettingsPage
+                  settings={settings}
+                  onSaveSettings={handleSaveSettings}
+                  onResetData={handleResetData}
+                  darkMode={darkMode}
+                  onToggleDarkMode={handleToggleDarkMode}
+                />
+              )}
+            </main>
           </div>
 
-          {/* Desktop & Mobile Sidebar */}
-          <Sidebar
-            currentTab={currentTab}
-            onTabChange={(tab) => {
-              setCurrentTab(tab);
-              setSelectedIssueId(null);
-            }}
-            isOpenMobile={isOpenMobileSidebar}
-            onCloseMobile={() => setIsOpenMobileSidebar(false)}
-          />
-
-          {/* Dashboard View Container */}
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto overflow-x-hidden">
-            {currentTab === 'dashboard' && (
-              <DashboardOverview
-                issues={issues}
-                onNavigate={(tab, issueId) => handleOpenDashboardTab(tab, issueId)}
-                onUpdateStatus={handleUpdateStatus}
-              />
-            )}
-
-            {currentTab === 'report' && (
-              <ReportProblemForm
-                onSaveIssue={handleSaveIssue}
-                onNavigateToAnalyzer={(id) => handleOpenDashboardTab('analyzer', id)}
-                userGroqKey={settings.groqApiKey}
-              />
-            )}
-
-            {currentTab === 'analyzer' && (
-              <AIProblemAnalyzer
-                issues={issues}
-                selectedIssueId={selectedIssueId}
-                userGroqKey={settings.groqApiKey}
-                onUpdateIssueAnalysis={handleUpdateIssueAnalysis}
-              />
-            )}
-
-            {currentTab === 'history' && (
-              <IssueHistory
-                issues={issues}
-                onUpdateStatus={handleUpdateStatus}
-                onDeleteIssue={handleDeleteIssue}
-                onSaveIssue={handleSaveIssue}
-                onNavigateToAnalyzer={(id) => handleOpenDashboardTab('analyzer', id)}
-              />
-            )}
-
-            {currentTab === 'map' && (
-              <CommunityMap
-                issues={issues}
-                onNavigateToAnalyzer={(id) => handleOpenDashboardTab('analyzer', id)}
-                onNavigateToReport={() => handleOpenDashboardTab('report')}
-              />
-            )}
-
-            {currentTab === 'emergency' && <EmergencyContacts />}
-
-            {currentTab === 'chatbot' && (
-              <AIChatbot
-                userGroqKey={settings.groqApiKey}
-                onNavigateToReport={() => handleOpenDashboardTab('report')}
-              />
-            )}
-
-            {currentTab === 'settings' && (
-              <SettingsPage
-                settings={settings}
-                onSaveSettings={handleSaveSettings}
-                onResetData={handleResetData}
-                darkMode={darkMode}
-                onToggleDarkMode={handleToggleDarkMode}
-              />
-            )}
-          </main>
+          <Footer onNavigate={(tab) => handleOpenDashboardTab(tab)} />
         </div>
       )}
     </div>

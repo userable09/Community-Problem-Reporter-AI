@@ -422,7 +422,7 @@ export const FAQS = [
   {
     question: 'How does the AI analyze my community problem report?',
     answer:
-      'Our Groq AI engine scans your description and image context to classify the exact civic category, assess urgency, rewrite your complaint in formal government language, identify responsible municipal agencies, and draft an official complaint letter.',
+      'Our AI engine scans your description and image context to classify the exact civic category, assess urgency, rewrite your complaint in formal government language, identify responsible municipal agencies, and draft an official complaint letter.',
   },
   {
     question: 'Do I need an account or login to submit a report?',

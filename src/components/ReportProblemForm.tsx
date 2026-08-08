@@ -356,7 +356,7 @@ export const ReportProblemForm: React.FC<ReportProblemFormProps> = ({
                 />
                 <div className="space-y-0.5">
                   <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-emerald-300" /> Auto AI Analysis with Groq
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-300" /> Auto AI Analysis
                   </span>
                   <p className="text-[11px] text-slate-300">
                     Instantly rewrite text, detect priority level, and draft complaint letter.

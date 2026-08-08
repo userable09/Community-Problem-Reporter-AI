@@ -18,6 +18,7 @@ import {
   Star,
 } from 'lucide-react';
 import { FAQS, STATS, TESTIMONIALS } from '../constants/data';
+import { Footer } from './Footer';
 
 interface LandingPageProps {
   onOpenDashboard: (tab?: string) => void;
@@ -197,7 +198,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenDashboard }) => 
             },
             {
               step: '02',
-              title: 'Groq AI Analysis',
+              title: 'Smart AI Analysis',
               desc: 'AI rewrites formally, fixes grammar, detects category & priority score.',
               icon: Sparkles,
             },
@@ -380,7 +381,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenDashboard }) => 
               Ready to Resolve Issues in Your Community?
             </h2>
             <p className="text-slate-200 text-sm sm:text-base">
-              No registration or account needed. Submit your first issue in under 60 seconds with Groq AI analysis.
+              No registration or account needed. Submit your first issue in under 60 seconds with instant AI analysis.
             </p>
             <button
               onClick={() => onOpenDashboard('report')}
@@ -394,26 +395,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenDashboard }) => 
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 py-12 px-4 sm:px-6 lg:px-8 bg-slate-950/80 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-400">
-          <div className="flex items-center gap-2">
-            <Shield className="w-5 h-5 text-emerald-400" />
-            <span className="font-bold text-slate-200 text-sm">Community Problem Reporter AI</span>
-          </div>
-          <p>© 2026 Community Problem Reporter AI. Local Storage Only. Built for Civic Safety & Public Good.</p>
-          <div className="flex gap-4">
-            <button onClick={() => onOpenDashboard('emergency')} className="hover:text-white">
-              Emergency Contacts
-            </button>
-            <button onClick={() => onOpenDashboard('map')} className="hover:text-white">
-              Live Map
-            </button>
-            <button onClick={() => onOpenDashboard('chatbot')} className="hover:text-white">
-              AI Assistant
-            </button>
-          </div>
-        </div>
-      </footer>
+      <Footer onNavigate={onOpenDashboard} />
     </div>
   );
 };

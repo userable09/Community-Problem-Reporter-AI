@@ -2,12 +2,7 @@
 
 **Empowering Citizens to Report, Track, and Resolve Neighborhood Issues.**
 
----
 Community Problem Reporter AI is a full-stack, AI-powered civic engagement platform designed to bridge the gap between everyday citizens and municipal authorities. By leveraging advanced generative AI models (Groq Llama-3.3 / Gemini API), interactive geospatial mapping (Leaflet), and local-first browser storage, citizens can effortlessly transform informal issue descriptions into professional, administrative municipal complaint letters while tracking community issues in real time.
-
----
-## Live App
-**Link** : https://community-problem-reporter-ai.vercel.app/
 
 ---
 

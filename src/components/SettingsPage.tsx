@@ -56,42 +56,29 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({
           <span>Application Settings & Preferences</span>
         </h2>
         <p className="text-xs text-slate-300">
-          Configure API credentials, display theme, and local storage data management.
+          Configure display theme, AI processing preferences, and local storage data management.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Groq API Key Configuration */}
+        {/* AI Engine Status */}
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 space-y-4 shadow-xl">
-          <div className="flex items-center gap-2 text-xs font-bold text-purple-300 uppercase tracking-wider">
-            <Key className="w-4 h-4 text-purple-300" />
-            <span>Groq AI API Key (Optional)</span>
+          <div className="flex items-center gap-2 text-xs font-bold text-emerald-300 uppercase tracking-wider">
+            <Sparkles className="w-4 h-4 text-emerald-300" />
+            <span>AI Processing Engine</span>
           </div>
 
           <p className="text-xs text-slate-300 leading-relaxed">
-            By default, the backend handles AI calls using system environment credentials. You can optionally supply your personal Groq API key here.
+            All issue classification, priority scoring, grammar correction, and formal municipal letters are processed directly via secure backend AI credentials.
           </p>
 
-          <form onSubmit={handleSaveGroqKey} className="space-y-3">
-            <input
-              type="password"
-              value={groqKey}
-              onChange={(e) => setGroqKey(e.target.value)}
-              placeholder="gsk_..."
-              className="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 font-mono"
-            />
-
-            <div className="flex items-center justify-between pt-1">
-              <span className="text-[11px] text-slate-400">Key stored locally in browser</span>
-              <button
-                type="submit"
-                className="px-5 py-2 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs flex items-center gap-1.5 transition-all shadow-md"
-              >
-                {savedSuccess ? <Check className="w-3.5 h-3.5" /> : null}
-                <span>{savedSuccess ? 'Saved!' : 'Save Key'}</span>
-              </button>
+          <div className="p-3.5 rounded-2xl bg-slate-900/80 border border-emerald-500/30 flex items-center gap-3">
+            <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+            <div className="text-xs">
+              <span className="font-bold text-white block">Server AI Pipeline Active</span>
+              <span className="text-[11px] text-slate-400">Secure backend processing without client API key prompts.</span>
             </div>
-          </form>
+          </div>
         </div>
 
         {/* Display & Theme Toggle */}
